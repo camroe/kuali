@@ -13,6 +13,9 @@ public class ElevatorController implements ReportingInterface {
 
     public ElevatorController(int numberOfElevators) {
         elevatorList = new ArrayList<Elevator>(numberOfElevators);
+        for (int i=0;i<numberOfElevators;i++) {
+            elevatorList.add(new Elevator(0,10,this,i)); //floors fixed for now.
+        }
     }
 
     /**
@@ -23,7 +26,7 @@ public class ElevatorController implements ReportingInterface {
      */
     public void Request(int fromFloor) {
         //TODO: algorithm to optimize for closest elevator could go here
-        //TODO: What if All elevators are busy?
+        //TODO: What if All elevators are busy/lockedout?
         Iterator<Elevator> iterator = elevatorList.iterator();
         Elevator freeElevator = null;
         while (iterator.hasNext()) {

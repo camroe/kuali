@@ -1,6 +1,5 @@
 package com.company;
 
-
 /**
  * Created by camerroe on 3/24/15.
  */
@@ -9,20 +8,24 @@ public class Elevator {
     private String direction;
     private String state = ElevatorConstants.STATE_LOCKEDOUT;
     private String doorState = ElevatorConstants.DOOR_STATE_CLOSED;
-    private int tripCount=0;
-    private int floorCount=0;
-    private int maxFloor =0;
-    private int minFloor =0;
-    private int currentFloor=0;
+    private int tripCount = 0;
+    private int floorCount = 0;
+    private int maxFloor = 0;
+    private int minFloor = 0;
+    private int currentFloor = 0;
+    private ReportingInterface reportingEntity;
+    private int ID;
 
-    public Elevator(int minFloor, int maxFloor) {
+    public Elevator(int minFloor, int maxFloor, ReportingInterface reportingEntity, int ID) {
         this.minFloor = minFloor;
         this.maxFloor = maxFloor;
-        if (this.minFloor>this.maxFloor) {
-            this.maxFloor=minFloor;
+        if (this.minFloor > this.maxFloor) {
+            this.maxFloor = minFloor;
             System.out.println("Warning: Min Floor .gt. Max Floor");
         }
-        currentFloor=this.minFloor;
+        currentFloor = this.minFloor;
+        this.reportingEntity = reportingEntity;
+        this.ID = ID;
     }
 
     //GETTERS - SETTERS
@@ -67,13 +70,13 @@ public class Elevator {
     public boolean requestTOFloor(int floor) {
         if (this.isLockedout() || this.isMoving()) {
             return false;
-        } else  {
+        } else {
             moveToFloor(floor);
             return true;
         }
     }
 
-    public boolean isLockedout(){
+    public boolean isLockedout() {
         return (state == ElevatorConstants.STATE_LOCKEDOUT);
     }
 
@@ -94,38 +97,53 @@ public class Elevator {
             System.out.println("Warn: request to floor .lt. min floor");
         }
         //TODO: To really simulate there should be time added here to simulate travel time.
+        this.tripCount++;
         this.doorState = ElevatorConstants.DOOR_STATE_CLOSED;
-        setDirection(this.currentFloor,targetFloor);
+        setDirection(this.currentFloor, targetFloor);
         this.state = ElevatorConstants.STATE_MOVING;
-        setDirection(currentFloor,targetFloor);
-        if (direction == ElevatorConstants.DIRECTION_UP){
-            for
+        setDirection(currentFloor, targetFloor);
+        Elevator elevatorMoving;
+        if (direction == ElevatorConstants.DIRECTION_UP) {
+            for (int i = currentFloor; i < targetFloor; i++) {
+                this.currentFloor = i + 1;
+                this.reportingEntity.reportFloor(ID, currentFloor);
+            }
+        } else {
+            for (int i = currentFloor; i > targetFloor; i--) {
+                this.currentFloor = i - 1;
+                this.reportingEntity.reportFloor(ID, currentFloor);
+            }
         }
-        for (int i = 0; i < floorDiff(currentFloor,targetFloor);i++) {
-            //TODO:For each floor -> report
-            //TODO:Set FLoor count
+        this.state=ElevatorConstants.STATE_STOPPED;
+        this.doorState=ElevatorConstants.DOOR_STATE_OPEN;//let them out or in.
+        checkLockout();
+    }
+
+    private void checkLockout() {
+        if (this.tripCount>=100){
+            this.doorState=ElevatorConstants.DOOR_STATE_CLOSED;
+            this.state=ElevatorConstants.STATE_LOCKEDOUT;
         }
-        //TODO:Set trip count.
     }
 
     private int floorDiff(int currentFloor, int targetFloor) {
-        return Math.abs(currentFloor-targetFloor);
+        return Math.abs(currentFloor - targetFloor);
     }
 
-    private void closeDoor(){
+    private void closeDoor() {
         //In all states you should be able to close the door.
         this.doorState = ElevatorConstants.DOOR_STATE_CLOSED;
     }
 
-    private void openDoor(){
+    private void openDoor() {
         //TODO:Check state to open door /safety
         this.doorState = ElevatorConstants.DOOR_STATE_OPEN;
     }
 
-    private void setDirection(int currentFloor, int requestedFloor){
-        direction=ElevatorConstants.DIRECTION_DOWN;
+    private void setDirection(int currentFloor, int requestedFloor) {
+        direction = ElevatorConstants.DIRECTION_DOWN;
         if (currentFloor >= requestedFloor) {
-            this.direction=ElevatorConstants.DIRECTION_UP;
+            this.direction = ElevatorConstants.DIRECTION_UP;
         }
     }
 }

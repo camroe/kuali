@@ -3,6 +3,7 @@ package com.company;
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+        //TODO: Use args to init Elevator controller i.e. number of elevators etc. For now just hard code.
+	ElevatorController elevatorController = new ElevatorController();
     }
 }

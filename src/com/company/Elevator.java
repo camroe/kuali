@@ -7,6 +7,7 @@ package com.company;
 public class Elevator {
     private String direction;
     private String state = ElevatorConstants.STATE_LOCKEDOUT;
+    private String doorState = ElevatorConstants.DOOR_STATE_CLOSED;
     private int tripCount=0;
     private int floorCount=0;
     private int maxFloor =0;
@@ -88,13 +89,23 @@ public class Elevator {
         return (state == ElevatorConstants.STATE_STOPPED);
     }
 
-    public void moveToFloor(int floor) {
+    private void moveToFloor(int floor) {
         //TODO: To really simulate there should be time added here to simulate travel time.
+        this.doorState = ElevatorConstants.DOOR_STATE_CLOSED;
         this.state = ElevatorConstants.STATE_MOVING;
         //TODO:For each floor -> report
         //TODO:Set FLoor count
         //TODO:Set trip count.
     }
 
+    private void closeDoor(){
+        //In all states you should be able to close the door.
+        this.doorState = ElevatorConstants.DOOR_STATE_CLOSED;
+    }
+
+    private void openDoor(){
+        //TODO:Check state to open door
+        this.doorState = ElevatorConstants.DOOR_STATE_OPEN;
+    }
 
 }

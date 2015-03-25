@@ -9,4 +9,6 @@ public class ElevatorConstants {
     public static final String STATE_MOVING = "moving";
     public static final String STATE_STOPPED = "stopped";
     public static final String STATE_LOCKEDOUT = "lockedout";
+    public static final String DOOR_STATE_CLOSED = "door_closed";
+    public static final String DOOR_STATE_OPEN = "door_open";
 }

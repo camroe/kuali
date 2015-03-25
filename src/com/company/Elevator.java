@@ -60,5 +60,32 @@ public class Elevator {
         return minFloor;
     }
 
+    public boolean requestTOFloor(int floor) {
+        if (floor > maxFloor) {
+            floor = maxFloor;
+            System.out.println("Warn: request to floor .gt. max floor");
+        } else if (floor < minFloor) {
+            floor = minFloor;
+            System.out.println("Warn: requet to floor .lt. min floor");
+        }
+        if (this.isLockedout() || this.isMoving()) {
+            return false;
+        } else return true;
+    }
+
+    public boolean isLockedout(){
+        return (state == ElevatorConstants.STATE_LOCKEDOUT);
+    }
+
+    public boolean isMoving() {
+        return (state == ElevatorConstants.STATE_MOVING);
+    }
+
+    public boolean isStopped() {
+        return (state == ElevatorConstants.STATE_STOPPED);
+    }
+
+    public void moveToFloor
+
 
 }

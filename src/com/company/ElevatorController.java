@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by camerroe on 3/24/15.
  */
-public class ElevatorController {
+public class ElevatorController implements ReportingInterface {
 
     //Maybe just an array?
     ArrayList<Elevator> elevatorList;
@@ -14,7 +14,7 @@ public class ElevatorController {
         elevatorList = new ArrayList<Elevator>(numberOfElevators);
     }
 
-    /** Recieved a request from a floor for an elevator
+    /** Received a request from a floor for an elevator
      *
      * @param fromFloor floor from which the request was made.
      */

@@ -6,5 +6,5 @@ package com.company;
 public interface ReportingInterface {
 
     public void reportFloor (int elevator, int floor);
-    
+
 }

@@ -21,4 +21,9 @@ public class ElevatorController implements ReportingInterface {
     public void Request(int fromFloor) {
 
     }
+
+    @Override
+    public void reportFloor(int elevator, int floor) {
+        System.out.println("Elevator:" + elevator + " : " + floor);
+    }
 }

@@ -70,7 +70,10 @@ public class Elevator {
         }
         if (this.isLockedout() || this.isMoving()) {
             return false;
-        } else return true;
+        } else  {
+            moveToFloor(floor);
+            return true;
+        }
     }
 
     public boolean isLockedout(){
@@ -85,7 +88,13 @@ public class Elevator {
         return (state == ElevatorConstants.STATE_STOPPED);
     }
 
-    public void moveToFloor
+    public void moveToFloor(int floor) {
+        //TODO: To really simulate there should be time added here to simulate travel time.
+        this.state = ElevatorConstants.STATE_MOVING;
+        //TODO:For each floor -> report
+        //TODO:Set FLoor count
+        //TODO:Set trip count.
+    }
 
 
 }

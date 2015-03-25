@@ -101,8 +101,6 @@ public class Elevator {
         this.doorState = ElevatorConstants.DOOR_STATE_CLOSED;
         setDirection(this.currentFloor, targetFloor);
         this.state = ElevatorConstants.STATE_MOVING;
-        setDirection(currentFloor, targetFloor);
-        Elevator elevatorMoving;
         if (direction == ElevatorConstants.DIRECTION_UP) {
             for (int i = currentFloor; i < targetFloor; i++) {
                 this.currentFloor = i + 1;
@@ -114,15 +112,16 @@ public class Elevator {
                 this.reportingEntity.reportFloor(ID, currentFloor);
             }
         }
-        this.state=ElevatorConstants.STATE_STOPPED;
-        this.doorState=ElevatorConstants.DOOR_STATE_OPEN;//let them out or in.
+        this.state = ElevatorConstants.STATE_STOPPED;
+        this.doorState = ElevatorConstants.DOOR_STATE_OPEN;//let them out or in.
         checkLockout();
     }
 
     private void checkLockout() {
-        if (this.tripCount>=100){
-            this.doorState=ElevatorConstants.DOOR_STATE_CLOSED;
-            this.state=ElevatorConstants.STATE_LOCKEDOUT;
+        if (this.tripCount >= 100) {
+            this.doorState = ElevatorConstants.DOOR_STATE_CLOSED;
+            //could move to fixed floor here.
+            this.state = ElevatorConstants.STATE_LOCKEDOUT;
         }
     }
 

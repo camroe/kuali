@@ -25,15 +25,14 @@ public class ElevatorControllerTest {
     }
 
     @Test
-    public void testConstructor () throws Exception {
+    public void testConstructor() throws Exception {
         ElevatorController ec = new ElevatorController(1);
         assertNotNull("Elevator Controller should not be null", ec);
     }
-/**
- *
- * Method: Request(int fromFloor)
- *
- */
+
+    /**
+     * Method: Request(int fromFloor)
+     */
     @Test
     public void testRequest() throws Exception {
 //TODO: Test goes here... 

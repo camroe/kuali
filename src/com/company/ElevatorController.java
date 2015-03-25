@@ -13,8 +13,8 @@ public class ElevatorController implements ReportingInterface {
 
     public ElevatorController(int numberOfElevators) {
         elevatorList = new ArrayList<Elevator>(numberOfElevators);
-        for (int i=0;i<numberOfElevators;i++) {
-            elevatorList.add(new Elevator(0,10,this,i)); //floors fixed for now.
+        for (int i = 0; i < numberOfElevators; i++) {
+            elevatorList.add(new Elevator(0, 10, this, i)); //floors fixed for now.
         }
     }
 
@@ -26,6 +26,22 @@ public class ElevatorController implements ReportingInterface {
      */
     public void Request(int fromFloor) {
         //TODO: algorithm to optimize for closest elevator could go here
+        Elevator selectedElevator = closestElevator(fromFloor);
+        if (selectedElevator == null) {
+            System.out.println("WARN:Elevators all busy"); //queue request here
+        } else {
+            selectedElevator.requestTOFloor(fromFloor);
+        }
+    }
+
+    private Elevator closestElevator(int requestedFloor) {
+        /* Search Elevator List, selecting the elevator that is:
+           1. Elevator on the same floor
+           2. Moving Elevator that will pass by
+           3. Closest Stopped (Unoccupied) elevator
+        */
+
+        //But in the meantime!
         //TODO: What if All elevators are busy/lockedout?
         Iterator<Elevator> iterator = elevatorList.iterator();
         Elevator freeElevator = null;
@@ -37,11 +53,7 @@ public class ElevatorController implements ReportingInterface {
                 break; //TODO:must be better way to do this
             }
         }
-        if (freeElevator == null) {
-            System.out.println("WARN:Elevators all busy"); //queue request here
-        } else {
-            freeElevator.requestTOFloor(fromFloor);
-        }
+        return freeElevator;
     }
 
     @Override
